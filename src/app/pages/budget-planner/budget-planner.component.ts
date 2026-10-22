@@ -23,22 +23,35 @@ export class BudgetPlannerComponent {
   budget = signal<number | null>(null);
   selected = signal<Set<string>>(new Set());
 
-  // SAMPLE PRICES: replace with your real rates
+  guestPresets = [10, 25, 50, 75, 100, 150, 200, 300, 500, 1000];
+
+  // Shows "Custom" in the dropdown when the typed number is not one of the presets
+  presetValue = computed(() =>
+    this.guestPresets.includes(this.guests()) ? String(this.guests()) : 'custom'
+  );
+
+  // PRICES: national averages and my estimates. Replace with your real rates.
   categories: PlanCategory[] = [
     {
       name: 'Decorations', icon: '🎀',
       items: [
-        { id: 'arch', label: 'Balloon arch', price: 150, unit: 'flat' },
-        { id: 'backdrop', label: 'Themed backdrop', price: 220, unit: 'flat' },
-        { id: 'tables', label: 'Table styling', price: 120, unit: 'flat' },
-        { id: 'lighting', label: 'Lighting and flowers', price: 180, unit: 'flat' },
+        { id: 'arch', label: 'Balloon arch', price: 300, unit: 'flat' },
+        { id: 'backdrop-std', label: 'Backdrop rental, standard (photo or stage)', price: 150, unit: 'flat' },
+        { id: 'backdrop-premium', label: 'Backdrop rental, premium themed', price: 350, unit: 'flat' },
+        { id: 'tables', label: 'Table styling', price: 150, unit: 'flat' },
+        { id: 'lighting', label: 'Lighting and flowers', price: 250, unit: 'flat' },
+        { id: 'garland', label: 'Flower garland decoration (festival)', price: 200, unit: 'flat' },
+        { id: 'festival', label: 'Festival theme decoration (Diwali, Navratri, etc.)', price: 350, unit: 'flat' },
+        { id: 'pooja', label: 'Pooja decoration (altar, flowers, rangoli)', price: 250, unit: 'flat' },
+        { id: 'house', label: 'Full house decoration (house warming)', price: 450, unit: 'flat' },
       ],
     },
     {
       name: 'Food & Drinks', icon: '🍽️',
       items: [
         { id: 'snacks', label: 'Snacks and appetizers', price: 8, unit: 'perGuest' },
-        { id: 'meal', label: 'Main meal', price: 22, unit: 'perGuest' },
+        { id: 'meal-casual', label: 'Main meal, casual drop-off style', price: 15, unit: 'perGuest' },
+        { id: 'meal-buffet', label: 'Main meal, buffet with serving staff', price: 30, unit: 'perGuest' },
         { id: 'dessert', label: 'Dessert table', price: 6, unit: 'perGuest' },
         { id: 'drinks', label: 'Drinks', price: 4, unit: 'perGuest' },
       ],
@@ -46,16 +59,15 @@ export class BudgetPlannerComponent {
     {
       name: 'Music & Entertainment', icon: '🎤',
       items: [
-        { id: 'dj', label: 'DJ and sound', price: 350, unit: 'flat' },
+        { id: 'dj', label: 'DJ and sound', price: 500, unit: 'flat' },
         { id: 'host', label: 'Host / emcee', price: 200, unit: 'flat' },
-        { id: 'live', label: 'Live performer', price: 500, unit: 'flat' },
       ],
     },
     {
       name: 'Games & Activities', icon: '🎮',
       items: [
         { id: 'games', label: 'Party games', price: 120, unit: 'flat' },
-        { id: 'photo', label: 'Photo booth', price: 250, unit: 'flat' },
+        { id: 'photo', label: 'Photo booth', price: 300, unit: 'flat' },
         { id: 'kids', label: 'Kids activities', price: 5, unit: 'perGuest' },
       ],
     },
@@ -68,9 +80,16 @@ export class BudgetPlannerComponent {
     },
   ];
 
+  onPreset(value: string) {
+    if (value !== 'custom') {
+      this.guests.set(Number(value));
+    }
+  }
+
   setGuests(value: string) {
+    if (value.trim() === '') { return; }   // lets the user clear the box and type a new number
     const n = Math.floor(Number(value)) || 1;
-    this.guests.set(Math.max(1, Math.min(500, n)));
+    this.guests.set(Math.max(1, Math.min(2000, n)));
   }
 
   setBudget(value: string) {

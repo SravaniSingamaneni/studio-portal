@@ -49,3 +49,12 @@
   gap: 10px;
   justify-content: flex-end;
 }
+.btn-cart {
+  background: var(--gold-soft);
+  color: var(--ink);
+  border: 2px solid var(--gold);
+}
+
+.links {
+  gap: 24px;
+}

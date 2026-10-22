@@ -8,10 +8,12 @@
     <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</a>
     <a routerLink="/about" routerLinkActive="active">About</a>
     <a routerLink="/services" routerLinkActive="active">Services</a>
+    <a routerLink="/gift-shop" routerLinkActive="active">Gift Shop</a>
     <a routerLink="/contact" routerLinkActive="active">Contact</a>
   </nav>
 
   <div class="auth">
+    <button class="btn btn-cart" routerLink="/cart">Cart ({{ cart.count() }})</button>
     <button class="btn btn-ghost" routerLink="/sign-in">Sign in</button>
     <button class="btn btn-primary" routerLink="/sign-up">Sign up</button>
   </div>
