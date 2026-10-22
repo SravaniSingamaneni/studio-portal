@@ -1,0 +1,74 @@
+<section class="hero">
+  <h1>Event Budget Planner</h1>
+  <p>Choose what you need, set your guest count, and see the estimate instantly.</p>
+</section>
+
+<section class="planner">
+  <div class="left">
+
+    <div class="panel">
+      <h2>1. How many guests?</h2>
+      <div class="guest-row">
+        <input type="number" min="1" max="500" [value]="guests()"
+               (input)="setGuests($any($event.target).value)" />
+        <div class="chips">
+          @for (n of [10, 25, 50, 100]; track n) {
+          <button type="button" class="chip" [class.on]="guests() === n" (click)="guests.set(n)">{{ n }}</button>
+          }
+        </div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h2>2. Pick what you need</h2>
+      @for (c of categories; track c.name) {
+      <h3>{{ c.icon }} {{ c.name }}</h3>
+      @for (item of c.items; track item.id) {
+      <label class="item" [class.picked]="isSelected(item.id)">
+        <input type="checkbox" [checked]="isSelected(item.id)" (change)="toggle(item.id)" />
+        <span class="name">{{ item.label }}</span>
+        <span class="rate">
+          {{ item.price | currency:'USD':'symbol':'1.0-0' }}{{ item.unit === 'perGuest' ? ' / guest' : ' flat' }}
+        </span>
+        <span class="line">{{ cost(item) | currency:'USD':'symbol':'1.0-0' }}</span>
+      </label>
+      }
+      }
+    </div>
+
+    <div class="panel">
+      <h2>3. Your budget (optional)</h2>
+      <input type="number" min="0" placeholder="e.g. 3000" (input)="setBudget($any($event.target).value)" />
+    </div>
+  </div>
+
+  <aside class="summary">
+    <h2>Your estimate</h2>
+
+    @for (c of categoryTotals(); track c.name) {
+    @if (c.total > 0) {
+    <div class="sum-row"><span>{{ c.icon }} {{ c.name }}</span><span>{{ c.total | currency:'USD':'symbol':'1.0-0' }}</span></div>
+    }
+    }
+
+    @if (total() === 0) {
+    <p class="empty">Select items to see your estimate.</p>
+    }
+
+    <div class="total"><span>Total</span><span>{{ total() | currency:'USD':'symbol':'1.0-0' }}</span></div>
+    <div class="per">About {{ perGuest() | currency:'USD':'symbol':'1.0-0' }} per guest for {{ guests() }} guests</div>
+
+    @if (difference() !== null) {
+    <div class="compare" [class.over]="over()">
+      @if (over()) {
+      Over budget by {{ absDifference() | currency:'USD':'symbol':'1.0-0' }}
+      } @else {
+      Within budget, {{ absDifference() | currency:'USD':'symbol':'1.0-0' }} left
+      }
+    </div>
+    }
+
+    <button class="btn btn-primary" routerLink="/contact">Request this plan</button>
+    <small class="note">Estimates only. Final pricing is confirmed after a short consultation.</small>
+  </aside>
+</section>

@@ -1,0 +1,94 @@
+.hero {
+  text-align: center;
+  padding: 56px 24px 16px;
+}
+
+  .hero h1 {
+    font-size: 2.6rem;
+    margin: 0 0 8px;
+  }
+
+  .hero p {
+    margin: 0;
+    font-size: 1.1rem;
+  }
+
+.wrap {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 24px 16px 64px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: var(--ivory);
+  border: 1px solid var(--gold-soft);
+  border-top: 6px solid var(--gold);
+  border-radius: 24px;
+  padding: 32px;
+  box-shadow: 0 10px 24px rgba(47, 95, 179, 0.10);
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-weight: 600;
+  color: var(--blue);
+}
+
+input, select, textarea {
+  font: inherit;
+  color: var(--ink);
+  padding: 10px 14px;
+  border: 2px solid var(--blue-soft);
+  border-radius: 12px;
+  background: #fff;
+  cursor: text;
+}
+
+select {
+  cursor: default;
+}
+
+  input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: var(--teal);
+    box-shadow: 0 0 0 3px rgba(42, 166, 160, 0.2);
+  }
+
+.ng-touched.ng-invalid {
+  border-color: #d9534f;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.error {
+  color: #c0392b;
+  margin-top: -6px;
+}
+
+.success {
+  background: var(--green-soft);
+  color: #2d6a27;
+  border-left: 6px solid var(--green);
+  padding: 12px 16px;
+  border-radius: 12px;
+}
+
+button[type='submit'] {
+  align-self: flex-start;
+  margin-top: 8px;
+}
+
+@media (max-width: 480px) {
+  .row {
+    grid-template-columns: 1fr;
+  }
+}

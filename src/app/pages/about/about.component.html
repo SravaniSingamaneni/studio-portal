@@ -1,4 +1,46 @@
-<section style="padding: 48px; text-align: center;">
-  <h2>About</h2>   <!-- change to Services / Contact in the other two -->
-  <p>Coming soon.</p>
+<section class="hero">
+  <h1>About AaDvi Studio</h1>
+  <p>Where every celebration becomes a memory.</p>
+</section>
+
+<section class="story">
+  <img src="assets/logo.png" alt="AaDvi Studio logo" />
+  <div>
+    <h2>Our story</h2>
+    <!-- Replace this with your real story -->
+    <p>
+      AaDvi Studio started with a simple belief: celebrations should feel joyful
+      for the host, too. We bring together event planning, decorations, party
+      hosting and thoughtful gifts so you can organize everything in one place.
+    </p>
+    <p>
+      Tell us your idea, and we'll help you shape it, from the first sketch to the last smile.
+    </p>
+  </div>
+</section>
+
+<section class="values">
+  <h2>What we believe in</h2>
+  <div class="grid">
+    @for (v of values; track v.title) {
+    <article class="card">
+      <div class="icon">{{ v.icon }}</div>
+      <h3>{{ v.title }}</h3>
+      <p>{{ v.text }}</p>
+    </article>
+    }
+  </div>
+</section>
+
+<section class="how">
+  <h2>How it works</h2>
+  <div class="steps">
+    @for (s of steps; track s.n) {
+    <div class="step">
+      <span class="num">{{ s.n }}</span>
+      <h3>{{ s.title }}</h3>
+      <p>{{ s.text }}</p>
+    </div>
+    }
+  </div>
 </section>

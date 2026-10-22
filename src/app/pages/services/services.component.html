@@ -1,1 +1,28 @@
-<p>services works!</p>
+<section class="hero">
+  <h1>Our Services</h1>
+  <p>Everything you need to plan, decorate, host and gift, in one place.</p>
+</section>
+
+<section class="list">
+  @for (s of services; track s.title) {
+  <article class="service" [class]="'service ' + s.color">
+    <div class="badge">{{ s.icon }}</div>
+    <div class="body">
+      <h2>{{ s.title }}</h2>
+      <p class="tagline">{{ s.tagline }}</p>
+      <ul>
+        @for (item of s.includes; track item) {
+        <li>{{ item }}</li>
+        }
+      </ul>
+      <button class="btn btn-primary" routerLink="/contact">Book this service</button>
+    </div>
+  </article>
+  }
+</section>
+
+<section class="cta">
+  <h2>Not sure what you need?</h2>
+  <p>Tell us about your occasion and we'll put together the perfect plan.</p>
+  <button class="btn btn-primary" routerLink="/contact">Talk to us</button>
+</section>

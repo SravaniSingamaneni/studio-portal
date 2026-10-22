@@ -1,0 +1,58 @@
+<section class="auth-page">
+  <form class="auth-card" [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+    <h1>Create your account</h1>
+    <p class="sub">Book events, order gifts and track everything in one place.</p>
+
+    @if (submitted) {
+    <div class="success">Account created! (Demo only. Real sign-up comes with the backend.)</div>
+    }
+
+    <label>
+      Full name
+      <input type="text" formControlName="name" placeholder="Your name" />
+    </label>
+    @if (f['name'].touched && f['name'].invalid) {
+    <small class="error">Please enter your name.</small>
+    }
+
+    <label>
+      Email
+      <input type="email" formControlName="email" placeholder="you@example.com" />
+    </label>
+    @if (f['email'].touched && f['email'].invalid) {
+    <small class="error">Please enter a valid email address.</small>
+    }
+
+    <label>
+      Password
+      <div class="pw-row">
+        <input [type]="showPassword ? 'text' : 'password'" formControlName="password" placeholder="At least 8 characters" />
+        <button type="button" class="pw-toggle" (click)="showPassword = !showPassword">
+          {{ showPassword ? 'Hide' : 'Show' }}
+        </button>
+      </div>
+    </label>
+    @if (f['password'].touched && f['password'].invalid) {
+    <small class="error">Use at least 8 characters, with a letter and a number.</small>
+    }
+
+    <label>
+      Confirm password
+      <input [type]="showPassword ? 'text' : 'password'" formControlName="confirmPassword" placeholder="Repeat your password" />
+    </label>
+    @if (f['confirmPassword'].touched && form.hasError('mismatch')) {
+    <small class="error">Passwords do not match.</small>
+    }
+
+    <label class="check">
+      <input type="checkbox" formControlName="agree" /> I agree to the terms and privacy policy
+    </label>
+    @if (f['agree'].touched && f['agree'].invalid) {
+    <small class="error">Please accept the terms to continue.</small>
+    }
+
+    <button class="btn btn-primary" type="submit">Create account</button>
+
+    <p class="switch">Already have an account? <a routerLink="/sign-in">Sign in</a></p>
+  </form>
+</section>
