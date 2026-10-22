@@ -1,0 +1,35 @@
+<section class="auth-page">
+  <form class="auth-card" [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+    <h1>Welcome back</h1>
+    <p class="sub">Sign in to manage your orders and events.</p>
+
+    <label>
+      Email
+      <input type="email" formControlName="email" placeholder="you@example.com" />
+    </label>
+    @if (f['email'].touched && f['email'].invalid) {
+    <small class="error">Please enter a valid email address.</small>
+    }
+
+    <label>
+      Password
+      <div class="pw-row">
+        <input [type]="showPassword ? 'text' : 'password'" formControlName="password" placeholder="Your password" />
+        <button type="button" class="pw-toggle" (click)="showPassword = !showPassword">
+          {{ showPassword ? 'Hide' : 'Show' }}
+        </button>
+      </div>
+    </label>
+    @if (f['password'].touched && f['password'].invalid) {
+    <small class="error">Please enter your password.</small>
+    }
+
+    <label class="check">
+      <input type="checkbox" formControlName="remember" /> Remember me
+    </label>
+
+    <button class="btn btn-primary" type="submit">Sign in</button>
+
+    <p class="switch">New here? <a routerLink="/sign-up">Create an account</a></p>
+  </form>
+</section>

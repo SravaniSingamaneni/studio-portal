@@ -1,4 +1,67 @@
-<section style="padding: 48px; text-align: center;">
-  <h2>Contact</h2>   <!-- change to Services / Contact in the other two -->
-  <p>Coming soon.</p>
+<section class="hero">
+  <h1>Contact Us</h1>
+  <p>Tell us about your occasion and we'll get back to you.</p>
+</section>
+
+<section class="wrap">
+  <form class="card" [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+
+    @if (submitted) {
+    <div class="success">Thank you! Your message has been sent. We'll be in touch soon.</div>
+    }
+
+    <label>
+      Name *
+      <input type="text" formControlName="name" placeholder="Your full name" />
+    </label>
+    @if (f['name'].touched && f['name'].invalid) {
+    <small class="error">Please enter your name (at least 2 characters).</small>
+    }
+
+    <label>
+      Email *
+      <input type="email" formControlName="email" placeholder="you@example.com" />
+    </label>
+    @if (f['email'].touched && f['email'].invalid) {
+    <small class="error">Please enter a valid email address.</small>
+    }
+
+    <label>
+      Phone
+      <input type="tel" formControlName="phone" placeholder="(555) 123-4567" />
+    </label>
+    @if (f['phone'].touched && f['phone'].invalid) {
+    <small class="error">Please enter a valid phone number.</small>
+    }
+
+    <div class="row">
+      <label>
+        Service *
+        <select formControlName="service">
+          <option value="" disabled>Select a service</option>
+          @for (o of serviceOptions; track o) {
+          <option [value]="o">{{ o }}</option>
+          }
+        </select>
+      </label>
+
+      <label>
+        Event date
+        <input type="date" formControlName="eventDate" />
+      </label>
+    </div>
+    @if (f['service'].touched && f['service'].invalid) {
+    <small class="error">Please choose a service.</small>
+    }
+
+    <label>
+      Message *
+      <textarea rows="5" formControlName="message" placeholder="Tell us about your event..."></textarea>
+    </label>
+    @if (f['message'].touched && f['message'].invalid) {
+    <small class="error">Please write at least 10 characters.</small>
+    }
+
+    <button class="btn btn-primary" type="submit">Send message</button>
+  </form>
 </section>
