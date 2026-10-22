@@ -1,0 +1,35 @@
+<section class="banner">
+  <div class="banner-text">
+    <h1>Make every celebration unforgettable</h1>
+    <p>Events, décor, party hosting and gifts, all in one place. Plan it, order it, track it.</p>
+    <button class="btn btn-primary" routerLink="/services">Explore services</button>
+  </div>
+
+  <div class="scene">
+    <div class="orb orb1"></div>
+    <div class="orb orb2"></div>
+    <div class="orb orb3"></div>
+  </div>
+</section>
+
+<section class="about">
+  <h2>What is this portal?</h2>
+  <p>
+    Your one-stop studio for celebrations. Book an event, choose decorations,
+    order gifts, pay online and follow your order status, including returns,
+    without leaving your couch.
+  </p>
+</section>
+
+<section class="services">
+  <h2>What we offer</h2>
+  <div class="grid">
+    @for (s of services; track s.title) {
+    <article class="card">
+      <div class="icon">{{ s.icon }}</div>
+      <h3>{{ s.title }}</h3>
+      <p>{{ s.blurb }}</p>
+    </article>
+    }
+  </div>
+</section>
