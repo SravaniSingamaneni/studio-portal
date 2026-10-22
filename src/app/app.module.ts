@@ -13,6 +13,8 @@ import { ContactComponent } from './pages/contact/contact.component';
 import { BudgetPlannerComponent } from './pages/budget-planner/budget-planner.component';
 import { SignInComponent } from './pages/sign-in/sign-in.component';
 import { SignUpComponent } from './pages/sign-up/sign-up.component';
+import { GiftShopComponent } from './pages/gift-shop/gift-shop.component';
+import { CartComponent } from './pages/cart/cart.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,9 @@ import { SignUpComponent } from './pages/sign-up/sign-up.component';
     ContactComponent,
     BudgetPlannerComponent,
     SignInComponent,
-    SignUpComponent
+    SignUpComponent,
+    GiftShopComponent,
+    CartComponent
   ],
   imports: [
     BrowserModule,

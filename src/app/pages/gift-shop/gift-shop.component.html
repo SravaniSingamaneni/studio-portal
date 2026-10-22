@@ -1,0 +1,43 @@
+<section class="hero">
+  <h1>Gift Shop</h1>
+  <p>Thoughtful gifts for every occasion, delivered to you.</p>
+</section>
+
+<section class="controls">
+  <input class="search" type="text" placeholder="Search gifts..."
+         (input)="search.set($any($event.target).value)" />
+  <select (change)="setSort($any($event.target).value)">
+    <option value="featured">Featured</option>
+    <option value="low">Price: low to high</option>
+    <option value="high">Price: high to low</option>
+  </select>
+</section>
+
+<section class="chips">
+  @for (c of categories; track c) {
+  <button type="button" class="chip" [class.on]="selectedCategory() === c"
+          (click)="selectedCategory.set(c)">
+    {{ c }}
+  </button>
+  }
+</section>
+
+<section class="grid">
+  @for (p of visible(); track p.id) {
+  <article class="card">
+    <div class="icon">{{ p.icon }}</div>
+    <span class="tag">{{ p.category }}</span>
+    <h3>{{ p.name }}</h3>
+    <p class="desc">{{ p.description }}</p>
+    <div class="bottom">
+      <span class="price">{{ p.price | currency }}</span>
+      <button type="button" class="btn btn-primary" [class.done]="added() === p.id"
+              (click)="addToCart(p)">
+        {{ added() === p.id ? 'Added' : 'Add to cart' }}
+      </button>
+    </div>
+  </article>
+  } @empty {
+  <p class="none">No gifts match your search. Try another word or category.</p>
+  }
+</section>

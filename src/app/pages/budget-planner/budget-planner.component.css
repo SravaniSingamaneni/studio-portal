@@ -60,29 +60,32 @@ input[type='number'] {
 
 .guest-row {
   display: flex;
-  gap: 16px;
-  align-items: center;
+  gap: 20px;
   flex-wrap: wrap;
 }
 
-.chips {
+.field {
   display: flex;
-  gap: 8px;
-}
-
-.chip {
-  border: 2px solid var(--blue);
-  background: transparent;
-  color: var(--blue);
-  border-radius: 999px;
-  padding: 8px 18px;
-  font: inherit;
+  flex-direction: column;
+  gap: 6px;
   font-weight: 600;
+  color: var(--blue);
 }
 
-  .chip.on {
-    background: var(--blue);
-    color: #fff;
+select {
+  font: inherit;
+  color: var(--ink);
+  padding: 10px 14px;
+  min-width: 170px;
+  border: 2px solid var(--blue-soft);
+  border-radius: 12px;
+  background: #fff;
+}
+
+  select:focus {
+    outline: none;
+    border-color: var(--teal);
+    box-shadow: 0 0 0 3px rgba(42, 166, 160, 0.2);
   }
 
 .item {

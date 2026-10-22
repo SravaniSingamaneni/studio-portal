@@ -1,0 +1,44 @@
+<section class="hero">
+  <h1>Your Cart</h1>
+</section>
+
+@if (cart.lines().length === 0) {
+<section class="empty">
+  <p>Your cart is empty.</p>
+  <button class="btn btn-primary" routerLink="/gift-shop">Browse gifts</button>
+</section>
+} @else {
+<section class="layout">
+  <div class="lines">
+    @for (line of cart.lines(); track line.product.id) {
+    <article class="line">
+      <div class="icon">{{ line.product.icon }}</div>
+      <div class="info">
+        <h3>{{ line.product.name }}</h3>
+        <p>{{ line.product.price | currency }} each</p>
+        <button type="button" class="link-btn" (click)="cart.remove(line.product.id)">Remove</button>
+      </div>
+      <div class="qty">
+        <button type="button" class="qbtn" aria-label="Decrease quantity" (click)="dec(line)">-</button>
+        <span>{{ line.qty }}</span>
+        <button type="button" class="qbtn" aria-label="Increase quantity" (click)="inc(line)">+</button>
+      </div>
+      <div class="total">{{ line.product.price * line.qty | currency }}</div>
+    </article>
+    }
+  </div>
+
+  <aside class="summary">
+    <h2>Order summary</h2>
+    <div class="row"><span>Items</span><span>{{ cart.count() }}</span></div>
+    <div class="row big"><span>Subtotal</span><span>{{ cart.subtotal() | currency }}</span></div>
+    <small>Shipping and tax are calculated at checkout.</small>
+
+    <button type="button" class="btn btn-primary" (click)="checkout()">Checkout</button>
+    @if (showCheckoutNote()) {
+    <div class="note">Checkout and payments are coming soon. They'll be connected once the backend is built.</div>
+    }
+    <button type="button" class="link-btn" (click)="cart.clear()">Clear cart</button>
+  </aside>
+</section>
+}

@@ -9,13 +9,21 @@
     <div class="panel">
       <h2>1. How many guests?</h2>
       <div class="guest-row">
-        <input type="number" min="1" max="500" [value]="guests()"
-               (input)="setGuests($any($event.target).value)" />
-        <div class="chips">
-          @for (n of [10, 25, 50, 100]; track n) {
-          <button type="button" class="chip" [class.on]="guests() === n" (click)="guests.set(n)">{{ n }}</button>
-          }
-        </div>
+        <label class="field">
+          Choose a size
+          <select (change)="onPreset($any($event.target).value)">
+            <option value="custom" disabled [selected]="presetValue() === 'custom'">Custom</option>
+            @for (n of guestPresets; track n) {
+            <option [value]="n" [selected]="guests() === n">{{ n }} guests</option>
+            }
+          </select>
+        </label>
+
+        <label class="field">
+          Or type the exact number
+          <input type="number" min="1" max="2000" [value]="guests()"
+                 (input)="setGuests($any($event.target).value)" />
+        </label>
       </div>
     </div>
 
