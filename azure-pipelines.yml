@@ -1,0 +1,145 @@
+trigger:
+  branches:
+    include:
+      - main
+      - develop
+
+pr:
+  branches:
+    include:
+      - main
+      - develop
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  NODE_VERSION: '20.x'
+  IMAGE_NAME: 'aadvi-studio-ui'
+
+stages:
+
+# ===========================================
+# CI STAGE
+# ===========================================
+
+- stage: CI
+  displayName: 'Continuous Integration'
+
+  jobs:
+
+  - job: BuildAndValidate
+
+    displayName: 'Build Validation'
+
+    steps:
+
+    - task: NodeTool@0
+      inputs:
+        versionSpec: $(NODE_VERSION)
+
+    - script: |
+        npm install
+      displayName: Install Dependencies
+
+    - script: |
+        npm run build
+      displayName: Build Angular Application
+
+    - task: Docker@2
+      displayName: Build Docker Image
+      inputs:
+        command: build
+        Dockerfile: Dockerfile
+        repository: $(IMAGE_NAME)
+        tags: |
+          $(Build.BuildId)
+
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: 'dist'
+        ArtifactName: 'aadvi-studio-ui'
+
+# ===========================================
+# DEV DEPLOYMENT
+# ===========================================
+
+- stage: DEV
+
+  dependsOn: CI
+
+  jobs:
+
+  - deployment: DeployToDev
+
+    environment: 'dev'
+
+    strategy:
+
+      runOnce:
+
+        deploy:
+
+          steps:
+
+          - download: current
+
+          - script: |
+              echo Deploying to DEV
+            displayName: Deploy DEV
+
+# ===========================================
+# QA DEPLOYMENT
+# ===========================================
+
+- stage: QA
+
+  dependsOn: DEV
+
+  jobs:
+
+  - deployment: DeployToQA
+
+    environment: 'qa'
+
+    strategy:
+
+      runOnce:
+
+        deploy:
+
+          steps:
+
+          - download: current
+
+          - script: |
+              echo Deploying to QA
+            displayName: Deploy QA
+
+# ===========================================
+# PROD DEPLOYMENT
+# ===========================================
+
+- stage: PROD
+
+  dependsOn: QA
+
+  jobs:
+
+  - deployment: DeployToProd
+
+    environment: 'prod'
+
+    strategy:
+
+      runOnce:
+
+        deploy:
+
+          steps:
+
+          - download: current
+
+          - script: |
+              echo Deploying to PROD
+            displayName: Deploy PROD
