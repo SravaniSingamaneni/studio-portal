@@ -43,7 +43,7 @@ stages:
       displayName: 'Install Dependencies'
 
     - script: |
-        npm run test -- --watch=false --browsers=ChromeHeadless
+        npm run test -- --watch=false
       displayName: 'Run Unit Tests'
 
     - script: |
