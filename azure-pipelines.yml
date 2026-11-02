@@ -48,7 +48,7 @@ stages:
 
     - script: |
         export CHROME_BIN=/usr/bin/google-chrome
-        npm run test -- --watch=false --browers=ChromeHeadlessCI
+        npm run test -- --watch=false 
       displayName: 'Run Unit Tests'
 
     - script: |
