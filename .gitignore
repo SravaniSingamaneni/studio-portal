@@ -45,3 +45,6 @@ Thumbs.db
 /.vscode
 /obj/Debug
 /.vs
+
+.nx/cache
+.nx/workspace-data
