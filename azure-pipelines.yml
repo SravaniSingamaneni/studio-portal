@@ -20,7 +20,7 @@ variables:
 stages:
 
 # ===========================================
-# CI STAGE
+# CI - Build and Validation STAGE
 # ===========================================
 
 - stage: Build_Validation
@@ -41,15 +41,18 @@ stages:
     - script: |
         npm install
       displayName: Install Dependencies
+
     - script: |
         npm run test -- --watch=false --browsers=ChromeHeadless
       displayName: 'Run Unit Tests'
-      - script: |
+
+    - script: |
         npm run lint
-      displayName: Run Lint Validation
-      - script: |
+      displayName: 'Run Lint Validation'
+
+    - script: |
         npm run build
-      displayName: Build Angular Application
+      displayName: 'Build Angular Application'
 
     - task: Docker@2
       displayName: Build Docker Image
