@@ -1,13 +1,14 @@
 trigger:
   branches:
     include:
-      - main
+      - master
       - develop
+      - UI-Design
 
 pr:
   branches:
     include:
-      - main
+      - master
       - develop
 
 pool:
@@ -20,7 +21,7 @@ variables:
 stages:
 
 # ===========================================
-# CI - Build and Validation STAGE
+# CI - Build and Validation
 # ===========================================
 
 - stage: Build_Validation
@@ -29,7 +30,6 @@ stages:
   jobs:
 
   - job: BuildAndValidate
-
     displayName: 'Build Validation'
 
     steps:
@@ -40,7 +40,7 @@ stages:
 
     - script: |
         npm install
-      displayName: Install Dependencies
+      displayName: 'Install Dependencies'
 
     - script: |
         npm run test -- --watch=false --browsers=ChromeHeadless
@@ -55,10 +55,10 @@ stages:
       displayName: 'Build Angular Application'
 
     - task: Docker@2
-      displayName: Build Docker Image
+      displayName: 'Build Docker Image'
       inputs:
         command: build
-        Dockerfile: Dockerfile
+        Dockerfile: 'Dockerfile'
         repository: $(IMAGE_NAME)
         tags: |
           $(Build.BuildId)
@@ -67,13 +67,14 @@ stages:
       inputs:
         PathtoPublish: 'dist'
         ArtifactName: 'aadvi-studio-ui'
+      displayName: 'Publish Build Artifacts'
 
 # ===========================================
 # DEV DEPLOYMENT
 # ===========================================
 
 - stage: DEV
-  displayName: CD - Deploy To DEV
+  displayName: 'CD - Deploy To DEV'
 
   dependsOn: Build_Validation
 
@@ -81,28 +82,25 @@ stages:
 
   - deployment: DeployToDev
 
-    environment: 'Development'
+    environment: 'dev'
 
     strategy:
-
       runOnce:
-
         deploy:
-
           steps:
 
           - download: current
 
           - script: |
               echo Deploying to DEV
-            displayName: Deploy DEV
+            displayName: 'Deploy DEV'
 
 # ===========================================
 # QA DEPLOYMENT
 # ===========================================
 
 - stage: QA
-  displayName: CD - Deploy To QA
+  displayName: 'CD - Deploy To QA'
 
   dependsOn: DEV
 
@@ -110,28 +108,25 @@ stages:
 
   - deployment: DeployToQA
 
-    environment: 'QA'
+    environment: 'qa'
 
     strategy:
-
       runOnce:
-
         deploy:
-
           steps:
 
           - download: current
 
           - script: |
               echo Deploying to QA
-            displayName: Deploy QA
+            displayName: 'Deploy QA'
 
 # ===========================================
-# SIT/Staging DEPLOYMENT
+# SIT / STAGING DEPLOYMENT
 # ===========================================
 
 - stage: STAGING
-  displayName: CD - Deploy To SIT/Staging
+  displayName: 'CD - Deploy To SIT/Staging'
 
   dependsOn: QA
 
@@ -139,18 +134,15 @@ stages:
 
   - deployment: DeployToStaging
 
-    environment: 'Staging'
+    environment: 'staging'
 
     strategy:
-
       runOnce:
-
         deploy:
-
           steps:
 
           - download: current
 
           - script: |
               echo Deploying to SIT/Staging
-            displayName: Deploy SIT/Staging
+            displayName: 'Deploy SIT/Staging'
