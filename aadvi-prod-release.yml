@@ -1,0 +1,29 @@
+trigger: none
+
+pool:
+  vmImage: 'ubuntu-24.04'
+
+stages:
+
+- stage: PROD
+
+  displayName: 'Production Release'
+
+  jobs:
+
+  - deployment: DeployToProd
+
+    environment: 'prod'
+
+    strategy:
+
+      runOnce:
+
+        deploy:
+
+          steps:
+
+          - download: current
+
+          - script: |
+              echo Deploying Production Release
