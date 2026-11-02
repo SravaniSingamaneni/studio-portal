@@ -11,7 +11,7 @@ pr:
       - develop
 
 pool:
-  vmImage: 'ubuntu-latest'
+  vmImage: 'ubuntu-24.04'
 
 variables:
   NODE_VERSION: '20.x'
@@ -23,8 +23,8 @@ stages:
 # CI STAGE
 # ===========================================
 
-- stage: CI
-  displayName: 'Continuous Integration'
+- stage: Build_Validation
+  displayName: 'CI - Build and Validation'
 
   jobs:
 
@@ -34,15 +34,20 @@ stages:
 
     steps:
 
-    - task: NodeTool@0
+    - task: UseNode@1
       inputs:
-        versionSpec: $(NODE_VERSION)
+        versionSpec: '20.x'
 
     - script: |
         npm install
       displayName: Install Dependencies
-
     - script: |
+        npm run test -- --watch=false --browsers=ChromeHeadless
+      displayName: 'Run Unit Tests'
+      - script: |
+        npm run lint
+      displayName: Run Lint Validation
+      - script: |
         npm run build
       displayName: Build Angular Application
 
@@ -65,14 +70,15 @@ stages:
 # ===========================================
 
 - stage: DEV
+  displayName: CD - Deploy To DEV
 
-  dependsOn: CI
+  dependsOn: Build_Validation
 
   jobs:
 
   - deployment: DeployToDev
 
-    environment: 'dev'
+    environment: 'Development'
 
     strategy:
 
@@ -93,6 +99,7 @@ stages:
 # ===========================================
 
 - stage: QA
+  displayName: CD - Deploy To QA
 
   dependsOn: DEV
 
@@ -100,7 +107,7 @@ stages:
 
   - deployment: DeployToQA
 
-    environment: 'qa'
+    environment: 'QA'
 
     strategy:
 
@@ -117,18 +124,19 @@ stages:
             displayName: Deploy QA
 
 # ===========================================
-# PROD DEPLOYMENT
+# SIT/Staging DEPLOYMENT
 # ===========================================
 
-- stage: PROD
+- stage: STAGING
+  displayName: CD - Deploy To SIT/Staging
 
   dependsOn: QA
 
   jobs:
 
-  - deployment: DeployToProd
+  - deployment: DeployToStaging
 
-    environment: 'prod'
+    environment: 'Staging'
 
     strategy:
 
@@ -141,5 +149,5 @@ stages:
           - download: current
 
           - script: |
-              echo Deploying to PROD
-            displayName: Deploy PROD
+              echo Deploying to SIT/Staging
+            displayName: Deploy SIT/Staging
