@@ -43,3 +43,8 @@ Thumbs.db
 /.vs/studio-portal/FileContentIndex
 /.vs/studio-portal/v17
 /.vscode
+/obj/Debug
+/.vs
+
+.nx/cache
+.nx/workspace-data

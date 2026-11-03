@@ -68,7 +68,7 @@ export class CartService {
       const parsed = raw ? JSON.parse(raw) : [];
       return Array.isArray(parsed)
         ? parsed.filter(
-          (i: any) => typeof i?.id === 'string' && Number.isInteger(i?.qty) && i.qty > 0
+          (i: StoredLine) => typeof i?.id === 'string' && Number.isInteger(i?.qty) && i.qty > 0
         )
         : [];
     } catch {

@@ -33,10 +33,22 @@ module.exports = function (config) {
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
-    autoWatch: true,
-    browsers: ['ChromeHeadless'],
+    customLaunchers: {
+      ChromeHeadlessCI: {
+        base: 'ChromeHeadless',
+        flags: [
+          '--no-sandbox',
+          '--disable-setuid-sandbox',
+          '--disable-gpu',
+          '--disable-dev-shm-usage'
+        ]
+      }
+    },
+
+    browsers: ['ChromeHeadlessCI'],
     singleRun: true,
-    restartOnFileChange: true,
+    autoWatch: false,
+    restartOnFileChange: false,
     listenAddress: 'localhost',
     hostname: 'localhost'
   });
