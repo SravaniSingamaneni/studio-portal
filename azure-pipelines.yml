@@ -2,14 +2,11 @@ trigger:
   branches:
     include:
       - master
-      - develop
-      - UI-Design
 
 pr:
   branches:
     include:
       - master
-      - develop
 
 pool:
   vmImage: 'ubuntu-24.04'
@@ -21,7 +18,7 @@ variables:
 stages:
 
 # ===========================================
-# CI - Build and Validation
+# CI - Build and Validation 
 # ===========================================
 
 - stage: Build_Validation
