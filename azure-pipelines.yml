@@ -21,7 +21,7 @@ variables:
 stages:
 
 # ===========================================
-# CI - Build and Validation
+# CI - Build and Validation 
 # ===========================================
 
 - stage: Build_Validation
