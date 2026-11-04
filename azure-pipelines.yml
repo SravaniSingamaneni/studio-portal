@@ -2,14 +2,11 @@ trigger:
   branches:
     include:
       - master
-      - develop
-      - UI-Design
 
 pr:
   branches:
     include:
       - master
-      - develop
 
 pool:
   vmImage: 'ubuntu-24.04'
