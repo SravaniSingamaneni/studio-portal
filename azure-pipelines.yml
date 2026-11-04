@@ -62,7 +62,7 @@ stages:
     - task: Docker@2
       displayName: 'Build Docker Image'
       inputs:
-        command: build -t $(IMAGE_NAME)
+        command: build
         Dockerfile: 'Dockerfile'
         repository: $(IMAGE_NAME)
         tags: |
